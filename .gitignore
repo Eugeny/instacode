@@ -1,0 +1,15 @@
+*.pyc
+*.pyo
+*.sublime-workspace
+.DS_Store
+*~
+config/environments/local.py
+public
+*.pid
+env
+node_modules
+static/CACHE
+static/vendor
+static/build
+license.yml*
+ci/tmp

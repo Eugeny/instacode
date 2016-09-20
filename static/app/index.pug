@@ -1,0 +1,27 @@
+doctype html
+html(ng:app='app', ng:controller='AppController as $ctrl')
+    head
+        meta(charset='UTF-8')
+        title Instacode
+
+        link(rel='stylesheet', href='../static/vendor/font-awesome/css/font-awesome.min.css')
+        link(rel='stylesheet', href='../static/build/app.css')
+        link(href="https://fonts.googleapis.com/css?family=Lobster+Two|PT+Sans:400,700&subset=cyrillic", rel="stylesheet")
+        script(src='../static/build/vendor.js')
+        script(src='../static/build/templates.js')
+        script(src='../static/build/app.js')
+    body
+        div.navbar.navbar-default.navbar-fixed-top
+            div.container
+                div.btn-group.pull-right(ng:if='me')
+                    a.btn.navbar-btn.btn-default(href='/user/{{me.username}}') {{me.username}}
+                    button.btn.navbar-btn.btn-default(ng:click='$ctrl.logout()',title='Log out')
+                        i.fa.fa-power-off
+                div.pull-right(ng:if='!me')
+                    button.btn.navbar-btn.btn-default(ng:click='$ctrl.login()')
+                        i.fa.fa-github
+                        | &nbsp; Log in
+                a.navbar-brand(href='/')
+                    | Instacode
+        div.container
+            ng:view

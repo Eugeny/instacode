@@ -1,0 +1,36 @@
+div(ng:show='$ctrl.step == "code"')
+    div.row
+        div.col-sm-6
+            textarea.form-control(ng:model='$ctrl.code', ui-codemirror='{lineWrapping: true, lineNumbers: true}')
+            div.code-hint
+                | Paste your code here
+                img.code-arrow(src='/static/img/curved-arrow.png')
+        div.col-md-6
+            div.language-hint
+                | Select language
+                img.language-arrow(src='/static/img/rotated-arrow.png')
+            input.form-control(type='text', uib-typeahead='x for x in $ctrl.languages|filter:$viewValue|limitTo:10', editable='false', placeholder='Select...' typeahead-select-on-exact='true', typeahead-min-length='0', ng:model='$ctrl.language')
+
+            br
+
+            input.form-control(ng:model='$ctrl.name', placeholder='Optional title')
+
+    br
+
+    div.text-center
+        button.btn.btn-primary.btn-lg(ng:click='$ctrl.goToStep("style")')
+            | Proceed
+
+
+div(ng:show='$ctrl.step == "style"')
+    button.btn.btn-default(ng:click='$ctrl.goToStep("code")')
+        i.fa.fa-arrow-left
+        | &nbsp; Previous step
+    div.btn-group(ng:if='!me')
+        button.btn.btn-primary(ng:click='$ctrl.publishAndLogin()')
+            i.fa.fa-github
+            | &nbsp; Login and publish
+        button.btn.btn-default(ng:click='$ctrl.publish()')
+            | Publish anonymously
+    button.btn.btn-primary(ng:click='$ctrl.publish()', ng:if='me')
+        | Publish
