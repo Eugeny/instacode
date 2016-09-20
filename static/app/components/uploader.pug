@@ -6,14 +6,18 @@ div(ng:show='$ctrl.step == "code"')
                 | Paste your code here
                 img.code-arrow(src='/static/img/curved-arrow.png')
         div.col-md-6
+            div
+                button.btn.btn-theme(ng:repeat='theme in ["fruity", "monokai", "solarized", "solarized256", "tango", "vs"]', uib-btn-radio='theme', ng:model='$ctrl.theme')
+                    img(src='/static/img/themes/{{theme}}.png')
+
+            div.theme-hint
+                | Choose colors &
+                img.theme-arrow(src='/static/img/rotated-arrow.png')
             div.language-hint
-                | Select language
+                | select the language
                 img.language-arrow(src='/static/img/rotated-arrow.png')
+
             input.form-control(type='text', uib-typeahead='x for x in $ctrl.languages|filter:$viewValue|limitTo:10', editable='false', placeholder='Select...' typeahead-select-on-exact='true', typeahead-min-length='0', ng:model='$ctrl.language')
-
-            br
-
-            input.form-control(ng:model='$ctrl.name', placeholder='Optional title')
 
     br
 
@@ -23,10 +27,16 @@ div(ng:show='$ctrl.step == "code"')
 
 
 div(ng:show='$ctrl.step == "style"')
+    div.row
+        div.col-sm-6
+            input.form-control(ng:model='$ctrl.name', placeholder='Optional title')
+        div.col-sm-6
+
     button.btn.btn-default(ng:click='$ctrl.goToStep("code")')
         i.fa.fa-arrow-left
         | &nbsp; Previous step
-    div.btn-group(ng:if='!me')
+
+    div.btn-group.pull-right(ng:if='!me')
         button.btn.btn-primary(ng:click='$ctrl.publishAndLogin()')
             i.fa.fa-github
             | &nbsp; Login and publish

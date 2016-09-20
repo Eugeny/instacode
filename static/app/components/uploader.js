@@ -3,7 +3,8 @@ angular.module('app').component('uploader', {
     controller: function (bootstrap) {
         var ctrl = this
         ctrl.step = 'code'
-
+        ctrl.theme = 'fruity'
+        
         bootstrap.promise.then(() => {
             ctrl.languages = bootstrap.languages
             ctrl.me = bootstrap.me

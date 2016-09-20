@@ -16,9 +16,11 @@ body {
 
     .navbar-brand {
         font-family: 'Lobster Two';
-        float: none;
         display: block;
+        width: 400px;
         text-align: center;
+        margin: auto;
+        float: none;
         font-size: 32px;
         color: white !important;
         text-shadow: 0 2px 2px rgba(0,0,0,.25);
@@ -81,7 +83,7 @@ body {
 uploader {
     display: block;
     padding: 30px;
-    max-width: 800px;
+    max-width: 900px;
     margin: 30px auto;
 
     .code-hint {
@@ -102,11 +104,30 @@ uploader {
         }
     }
 
+    .theme-hint {
+        font-family: 'Lobster Two';
+        color: #888;
+        font-size: 18px;
+        margin: 25px 0 11px 131px;
+        position: relative;
+
+        .theme-arrow {
+            position: absolute;
+            opacity: .25;
+
+            transform: rotateZ(96deg);
+            left: -22px;
+            top: -23px;
+            width: 50px;
+            height: 50px;
+        }
+    }
+
     .language-hint {
         font-family: 'Lobster Two';
         color: #888;
         font-size: 18px;
-        margin: 0 0 11px 100px;
+        margin: 0 0 11px 137px;
         position: relative;
 
         .language-arrow {
@@ -114,7 +135,7 @@ uploader {
             opacity: .25;
 
             transform: rotateZ(-89deg);
-            left: 66px;
+            left: 88px;
             top: 1px;
             width: 50px;
             height: 50px;
@@ -126,4 +147,25 @@ uploader {
 .CodeMirror {
     border-radius: 5px;
     border: 1px solid #ccc;
+    height: 316px;
+}
+
+.btn-theme {
+    margin: 0;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: transparent;
+
+    img {
+        box-shadow: 0 1px 1px rgba(0,0,0,.5);
+        border-radius: 3px;
+    }
+
+    &:hover {
+        background: rgba(23, 55, 125, 0.125);
+    }
+
+    &.active, &:active {
+        background: rgba(23, 55, 125, 0.25);
+    }
 }
