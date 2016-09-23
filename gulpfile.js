@@ -22,6 +22,7 @@ gulp.task('css', () => {
     return gulp.src([
         'static/bootstrap/bootstrap.less',
         'static/vendor/codemirror/lib/codemirror.css',
+        'static/vendor/angular-ui-select/dist/select.css',
         'static/app/*.less',
         'static/app/**/*.less',
     ])
@@ -37,6 +38,7 @@ gulp.task('vendor-js', () => {
         'static/vendor/angular-bootstrap/ui-bootstrap-tpls.js',
         'static/vendor/codemirror/lib/codemirror.js',
         'static/vendor/angular-ui-codemirror/ui-codemirror.js',
+        'static/vendor/angular-ui-select/dist/select.js',
     ])
         .pipe(concat('vendor.js'))
         .pipe(gulp.dest('static/build'))

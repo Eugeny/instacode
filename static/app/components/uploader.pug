@@ -17,7 +17,12 @@ div(ng:show='$ctrl.step == "code"')
                 | select the language
                 img.language-arrow(src='/static/img/rotated-arrow.png')
 
-            input.form-control(type='text', uib-typeahead='x for x in $ctrl.languages|filter:$viewValue|limitTo:10', editable='false', placeholder='Select...' typeahead-select-on-exact='true', typeahead-min-length='0', ng:model='$ctrl.language')
+            ui-select.language-input(ng:model='$ctrl.language')
+                ui-select-match
+                    span(ng:bind="$select.selected")
+                ui-select-choices(repeat="x in ($ctrl.languages|filter: $select.search)")
+                    span(ng:bind="x")
+        </ui-select>
 
     br
 
@@ -29,7 +34,11 @@ div(ng:show='$ctrl.step == "code"')
 div(ng:show='$ctrl.step == "style"')
     div.row
         div.col-sm-6
-            input.form-control(ng:model='$ctrl.name', placeholder='Optional title')
+            .photo-card
+                div.label.label1 003728543
+                div.label.label2 INSTACO.DE 107MM
+                img
+                input.form-control(ng:model='$ctrl.name', placeholder='Optional title')
         div.col-sm-6
 
     button.btn.btn-default(ng:click='$ctrl.goToStep("code")')

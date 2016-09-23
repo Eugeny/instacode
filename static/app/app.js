@@ -3,6 +3,7 @@ angular.module('app', [
     'templates',
     'ui.bootstrap',
     'ui.codemirror',
+    'ui.select',
 ]).config(($locationProvider, $routeProvider) => {
     $locationProvider.html5Mode({enabled: true, requireBase: false})
     $routeProvider.when('/', {

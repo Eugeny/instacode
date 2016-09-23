@@ -4,7 +4,8 @@ angular.module('app').component('uploader', {
         var ctrl = this
         ctrl.step = 'code'
         ctrl.theme = 'fruity'
-        
+        ctrl.language = 'JavaScript'
+
         bootstrap.promise.then(() => {
             ctrl.languages = bootstrap.languages
             ctrl.me = bootstrap.me

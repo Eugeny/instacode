@@ -1,6 +1,11 @@
 @import "../bootstrap/include.less";
 @import "mixins.less";
 
+* {
+    outline: none !important;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
 body {
     padding: 70px 0;
     #gradient > .radial(#fff, #ccc);
@@ -38,7 +43,7 @@ body {
 }
 
 .btn-default {
-    #gradient > .vertical(#fff, #bbb);
+    #gradient > .vertical(#fff, #ccc);
     .transition(0.25s all);
 
     border-radius: 3px;
@@ -83,8 +88,13 @@ body {
 uploader {
     display: block;
     padding: 30px;
-    max-width: 900px;
+    width: 860px;
     margin: 30px auto;
+
+    .language-input {
+        width: 200px;
+        margin: auto;
+    }
 
     .code-hint {
         font-family: 'Lobster Two';
@@ -139,6 +149,56 @@ uploader {
             top: 1px;
             width: 50px;
             height: 50px;
+
+            z-index: 1;
+        }
+    }
+
+    .photo-card {
+        display: inline-block;
+        padding: 30px;
+        margin: 20px 0 30px;
+        background: #f0f0f0;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,.25), 0 5px 25px rgba(0,0,0,.5);
+        transform: rotateZ(-1deg);
+        -moz-transform: rotateZ(-1deg);
+        -webkit-transform: rotateZ(-1deg);
+        position: relative;
+
+        img {
+            width: 400px;
+            height: 400px;
+            background: black;
+        }
+
+        input {
+            margin-top: 20px;
+            font-family: 'Bad Script';
+            border: none;
+            background: transparent;
+            box-shadow: none !important;
+            font-size: 22px;
+            text-align: center;
+        }
+
+        .label {
+            font-family: monospace;
+            color: #ddd;
+            font-size: 20px;
+            position: absolute;
+        }
+
+        .label1 {
+            left: 20px;
+            top: 430px;
+            transform: rotateZ(-2deg);
+        }
+
+        .label2 {
+            color: #e0e0e0;
+            right: 17px;
+            top: 425px;
         }
     }
 }
