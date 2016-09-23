@@ -37,8 +37,21 @@ div(ng:show='$ctrl.step == "style"')
             .photo-card
                 div.label.label1 003728543
                 div.label.label2 INSTACO.DE 107MM
+                div.label.loading(ng:if='$ctrl.spoilVisible') HOLD ON, WE'RE WORKING ON IT
                 img
-                input.form-control(ng:model='$ctrl.name', placeholder='Optional title')
+                img.spoil(
+                    ng:repeat='i in [0,1,2]'
+                    ng:if='$ctrl.spoilVisible',
+                    ng:src='/static/img/spoil{{i}}.jpeg',
+                    ng:style='{opacity: $ctrl.spoilOpacity[i]}'
+                )
+                img.rot90.spoil(
+                    ng:repeat='i in [0,1,2]'
+                    ng:if='$ctrl.spoilVisible',
+                    ng:src='/static/img/spoil{{i}}.jpeg',
+                    ng:style='{opacity: $ctrl.spoilOpacity[i]}'
+                )
+                input.form-control(ng:model='$ctrl.title', placeholder='Optional title')
         div.col-sm-6
 
     button.btn.btn-default(ng:click='$ctrl.goToStep("code")')

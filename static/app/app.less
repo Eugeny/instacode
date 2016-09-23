@@ -155,50 +155,77 @@ uploader {
     }
 
     .photo-card {
-        display: inline-block;
-        padding: 30px;
-        margin: 20px 0 30px;
-        background: #f0f0f0;
-        border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0,0,0,.25), 0 5px 25px rgba(0,0,0,.5);
         transform: rotateZ(-1deg);
         -moz-transform: rotateZ(-1deg);
         -webkit-transform: rotateZ(-1deg);
-        position: relative;
+    }
+}
 
-        img {
-            width: 400px;
-            height: 400px;
-            background: black;
-        }
+.photo-card {
+    display: inline-block;
+    padding: 30px;
+    margin: 20px 0 30px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.25), 0 5px 25px rgba(0,0,0,.5);
+    position: relative;
 
-        input {
-            margin-top: 20px;
-            font-family: 'Bad Script';
-            border: none;
-            background: transparent;
-            box-shadow: none !important;
-            font-size: 22px;
-            text-align: center;
-        }
+    img {
+        width: 400px;
+        height: 400px;
+        background: black;
 
-        .label {
-            font-family: monospace;
-            color: #ddd;
-            font-size: 20px;
+        &.spoil {
             position: absolute;
-        }
+            left: 30px;
+            top: 30px;
+            transition: 1.5s opacity;
+            -moz-transition: 1.5s opacity;
+            -webkit-transition: 1.5s opacity;
 
-        .label1 {
+            &.rot90 {
+                transform: rotateZ(90deg);
+                -moz-transform: rotateZ(90deg);
+                -webkit-transform: rotateZ(90deg);
+            }
+        }
+    }
+
+    input, .title {
+        margin-top: 30px;
+        font-family: 'Bad Script';
+        border: none;
+        background: transparent;
+        box-shadow: none !important;
+        font-size: 22px;
+        text-align: center;
+    }
+
+
+    .label {
+        font-family: monospace;
+        color: #ddd;
+        font-size: 20px;
+        position: absolute;
+
+        &.label1 {
             left: 20px;
             top: 430px;
             transform: rotateZ(-2deg);
         }
 
-        .label2 {
+        &.label2 {
             color: #e0e0e0;
             right: 17px;
             top: 425px;
+        }
+
+        &.loading {
+            color: #eee;
+            left: 50px;
+            right: 50px;
+            top: 225px;
+            text-align: center;
         }
     }
 }

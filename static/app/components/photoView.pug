@@ -1,0 +1,6 @@
+div.text-center
+    div.photo-card 
+        div.label.label1 0000{{$ctrl.photo.id}}
+        div.label.label2 INSTACO.DE 107MM
+        img(ng:src='/api/photo/{{$ctrl.photo.id}}/stream')
+        div.title {{$ctrl.photo.title}}
