@@ -1,3 +1,6 @@
+import os
+
+from django.conf import settings
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from django.db import models
 
@@ -95,8 +98,33 @@ class Photo (BaseModel):
             data['user'] = self.user.serialize()
         return data
 
+    def get_path(self, type=None, ext='png'):
+        dir = '%i/%i/%i' % (self.id / 1024 / 1024, self.id / 1024 % 1024, self.id % 1024)
+        return '%s/%s/%i%s.%s' % (settings.FILE_DIR, dir, int(self.id), ('-' + type if type else ''), ext)
+
+    def exists(self, type=None, ext='png'):
+        return os.path.exists(self.get_path(type, ext))
+
+    def read(self, type=None, ext='png'):
+        try:
+            f = open(self.get_path(type, ext))
+        except:
+            try:
+                f = open(self.get_path())
+            except:
+                return ''
+        return f.read()
+
+    def write(self, type, data):
+        dir = os.path.split(self.get_path(type))[0]
+        try:
+            os.makedirs(dir)
+        except:
+            pass
+        open(self.get_path(type), 'w').write(data)
+
 
 class Like (BaseModel):
     user = models.ForeignKey(User, related_name='likes', null=True, blank=True)
     photo = models.ForeignKey(Photo, related_name='likes')
-    ip = models.CharField(max_length=63)
+    ip = models.CharField(max_length=63, db_index=True, null=True, blank=True)

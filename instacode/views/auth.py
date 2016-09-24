@@ -21,7 +21,6 @@ def log_in(request):
 
 def log_out(request):
     logout(request)
-    print '### LOGOUT'
     return HttpResponseRedirect(request.GET.get('return', '/'))
 
 
@@ -56,22 +55,22 @@ def process_oauth_callback(request):
             email=email,
         )
 
+    sk = request.session.session_key
     user.backend = 'django.contrib.auth.backends.ModelBackend'
-    print dict(request.session)
     login(request, user)
-    print
-    print dict(request.session)
-    print '### LOGIN', user
+    request.session['old_key'] = sk
 
     return JUST_REGISTERED
 
 
 def oauth_callback(request):
     if process_oauth_callback(request) == JUST_REGISTERED:
-        for photo in Photo.objects.filter(temp_owner=request.session.session_key).all():
-            photo.user = request.user
-            photo.temp_owner = None
-            photo.save()
+        sk = request.session.get('old_key', None)
+        if sk:
+            for photo in Photo.objects.filter(temp_owner=sk).all():
+                photo.user = request.user
+                photo.temp_owner = None
+                photo.save()
         return HttpResponseRedirect(request.session.get('login_return', '/'))
     else:
         return HttpResponseRedirect('/')

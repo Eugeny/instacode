@@ -1,3 +1,4 @@
+import base64
 import json
 import os
 from pygments.lexers import get_all_lexers
@@ -6,7 +7,8 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, JsonResponse
 
-from ..models import Photo, User
+from ..models import Photo, User, Like
+from ..instacode import Instacode
 
 
 EXTRA_LEXERS = {
@@ -16,8 +18,23 @@ EXTRA_LEXERS = {
 
 
 def view_index(request):
+    # force create session
+    request.session['test'] = 1
     content = open(os.path.join(settings.BASE_DIR, 'static/build/index.html')).read()
     return HttpResponse(content=content)
+
+
+def api_highlight(request):
+    data = json.loads(request.body)
+    code = data['code'] + '\n\n'
+    language = data['language']
+    theme = data.get('theme', 'monokai')
+
+    if language in EXTRA_LEXERS:
+        language = EXTRA_LEXERS[language]
+
+    output = Instacode().run(code, language, style=theme)
+    return HttpResponse(base64.b64encode(output))
 
 
 def api_publish(request):
@@ -30,9 +47,6 @@ def api_publish(request):
     shaders = data['shaders']
     title = data['title']
 
-    if language in EXTRA_LEXERS:
-        language = EXTRA_LEXERS[language]
-
     params = {
         'parameters': parameters,
         'shaders': shaders,
@@ -40,15 +54,17 @@ def api_publish(request):
     }
 
     p = Photo(
-        temp_owner=request.session.session_key,
         code=code,
         title=title,
         language=language,
-        params=json.dumps(params),
+        params=params,
     )
 
     if request.user.is_authenticated():
         p.user = request.user
+    else:
+        print 'temp', request.session.session_key
+        p.temp_owner = request.session.session_key
 
     p.save()
 
@@ -85,9 +101,42 @@ def api_bootstrap(request):
 
 def api_photo(request, id=None):
     photo = get_object_or_404(Photo, id=id)
-    return JsonResponse(photo.serialize(with_user=True, with_content=True))
+    data = photo.serialize(with_user=True, with_content=True)
+    data['liked'] = Like.objects.filter(
+        photo=photo,
+        user=request.user,
+        ip=None if request.user else request.ip,
+    ).exists()
+    return JsonResponse(data)
 
 
 def api_user(request, id=None):
     user = get_object_or_404(User, id=id)
     return JsonResponse(user.serialize(with_photos=True))
+
+
+def api_like(request, id=None):
+    photo = get_object_or_404(Photo, id=id)
+    _, created = Like.objects.get_or_create(
+        photo=photo,
+        user=request.user,
+        ip=None if request.user else request.ip,
+    )
+    if created:
+        photo.like_count += 1
+        photo.save()
+    return JsonResponse({})
+
+
+def api_dislike(request, id=None):
+    photo = get_object_or_404(Photo, id=id)
+    q = Like.objects.filter(
+        photo=photo,
+        user=request.user,
+        ip=None if request.user else request.ip,
+    )
+    if q.exists():
+        q.delete()
+        photo.like_count -= 1
+        photo.save()
+    return JsonResponse({})

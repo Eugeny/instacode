@@ -33,6 +33,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'instacode.middleware.IpMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 

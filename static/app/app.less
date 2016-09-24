@@ -166,8 +166,8 @@ uploader {
     padding: 30px;
     margin: 20px 0 30px;
     background: #f0f0f0;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,.25), 0 5px 25px rgba(0,0,0,.5);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.125), 0 5px 250px rgba(0,0,0,.25);
     position: relative;
 
     img {
@@ -254,5 +254,78 @@ uploader {
 
     &.active, &:active {
         background: rgba(23, 55, 125, 0.25);
+    }
+}
+
+
+photo-view {
+    .top {
+        display: flex;
+
+        .photo-card {
+            flex: none;
+        }
+
+        .left, .right {
+            flex: auto;
+            flex-basis: 0;
+            flex-grow: 1;
+            padding: 40px;
+        }
+
+        .right {
+
+            .owner {
+                padding: 10px 0;
+                position: relative;
+
+                .avatar {
+                    width: 64px;
+                    height: 64px;
+                    border-radius: 3px;
+                    box-shadow: 0 1px 1px rgba(0,0,0,.25);
+                    margin: 0 0 5px;
+                }
+
+                .name {
+                    display: block;
+                    font-size: 20px;
+                    font-weight: bold;
+
+                    border-radius: 3px;
+                    cursor: pointer;
+
+                    display: inline-block;
+                    padding: 5px;
+                    position: relative;
+                    left: -5px;
+
+                    &:hover {
+                        background: rgba(0,0,0,0.125);
+                        text-decoration: none;
+                    }
+
+                    &.active, &:active {
+                        background: rgba(0,0,0,0.25);
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.muut {
+    width: 600px;
+    margin: 30px auto;
+    padding: 20px 40px !important; 
+    background: white;
+    box-shadow: 0 1px 1px rgba(0,0,0,.25);
+
+    #moot-logo {
+        padding: 0;
+        * {
+            display: none !important;
+        }
     }
 }

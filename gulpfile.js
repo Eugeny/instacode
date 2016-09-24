@@ -33,6 +33,7 @@ gulp.task('css', () => {
 
 gulp.task('vendor-js', () => {
     return gulp.src([
+        'static/vendor/jquery/dist/jquery.min.js',
         'static/vendor/angular/angular.js',
         'static/vendor/angular-route/angular-route.js',
         'static/vendor/angular-bootstrap/ui-bootstrap-tpls.js',

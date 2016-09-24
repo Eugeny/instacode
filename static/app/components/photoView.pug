@@ -1,6 +1,27 @@
-div.text-center
-    div.photo-card 
+div.top
+    div.left
+    div.photo-card
         div.label.label1 0000{{$ctrl.photo.id}}
         div.label.label2 INSTACO.DE 107MM
         img(ng:src='/api/photo/{{$ctrl.photo.id}}/stream')
         div.title {{$ctrl.photo.title}}
+    div.right
+        div(ng:if='$ctrl.photo.user')
+            div.owner
+                img.avatar(ng:src='https://github.com/{{$ctrl.photo.user.username}}.png')
+                br
+                a.name(ng:href='/user/{{$ctrl.photo.user.username}}') github.com/{{$ctrl.photo.user.username}}
+
+        button.btn.btn-like.btn-default(ng:click='$ctrl.toggleLike()', ng:class='{active: $ctrl.photo.liked}')
+            i.fa.fa-heart(ng:class='{"text-danger": $ctrl.photo.liked}')
+            | &nbsp; {{$ctrl.photo.like_count}}
+
+        br
+        br
+
+        button.btn.btn-default(ng:click='$ctrl.showCode()')
+            i.fa.fa-code
+            | &nbsp; Show code
+
+
+a.muut Comments

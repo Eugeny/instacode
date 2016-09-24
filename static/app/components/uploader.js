@@ -10,6 +10,9 @@ angular.module('app').component('uploader', {
         ctrl.spoilRate = [0, 0, 0, 0, 0, 0]
         ctrl.spoilVisible = false
 
+
+        ctrl.code = 'bootstrap.promise.then(() => {\n            ctrl.languages =\nbootstrap.languages\n            ctrl.me = bootstrap.me\n        })'
+
         bootstrap.promise.then(() => {
             ctrl.languages = bootstrap.languages
             ctrl.me = bootstrap.me
@@ -21,6 +24,16 @@ angular.module('app').component('uploader', {
 
             if (step == 'style') {
                 ctrl.spoilVisible = true
+                $http.post('/api/highlight', {
+                    code: ctrl.code,
+                    language: ctrl.language,
+                    theme: ctrl.theme,
+                }).then((response) => {
+                    console.log('image', response.data)
+                    ctrl.spoilVisible = false
+                }, () => {
+                    // TODO
+                })
             }
 
         }

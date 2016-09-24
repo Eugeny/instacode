@@ -16,3 +16,5 @@ GITHUB_CLIENT_SECRET = '15d8242223f18f0bcb5ecac5abf44d9a09a6b54d'
 GITHUB_OAUTH_URL = 'https://github.com/login/oauth/authorize?client_id=%s&scope=user:email' % GITHUB_CLIENT_ID
 
 SESSION_COOKIE_SECURE = False
+
+FILE_DIR = './data'

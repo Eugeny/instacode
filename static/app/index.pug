@@ -10,6 +10,8 @@ html(ng:app='app', ng:controller='AppController as $ctrl')
         script(src='../static/build/vendor.js')
         script(src='../static/build/templates.js')
         script(src='../static/build/app.js')
+
+        link(rel="stylesheet", href="https://cdn.muut.com/1/moot.css")
     body
         div.navbar.navbar-default.navbar-fixed-top
             div.container
@@ -23,5 +25,8 @@ html(ng:app='app', ng:controller='AppController as $ctrl')
                         | &nbsp; Log in using GitHub
                 a.navbar-brand(href='/')
                     | Instacode
+
         div.container
             ng:view
+
+        script(src="//cdn.muut.com/1/moot.min.js")
