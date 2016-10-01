@@ -3,8 +3,12 @@ angular.module('app').component('photoView', {
         photo: '<'
     },
     templateUrl: 'components/photoView.html',
-    controller: function ($http, $window, $uibModal) {
+    controller: function ($http, $window, $uibModal, $location, bootstrap) {
         let ctrl = this
+
+        bootstrap.promise.then(() => {
+            ctrl.me = bootstrap.me
+        })
 
         ctrl.toggleLike = () => {
             if (ctrl.photo.liked) {
@@ -26,6 +30,14 @@ angular.module('app').component('photoView', {
                 },
                 backdrop: 'static',
             })
+        }
+
+        ctrl.delete = () => {
+            if (confirm('Delete this post?')) {
+                $http.delete(`/api/photo/${ctrl.photo.id}`).then(() => {
+                    $location.path('/')
+                })
+            }
         }
 
         $('.muut').muut({

@@ -8,7 +8,8 @@
 
 body {
     padding: 70px 0;
-    #gradient > .radial(#fff, #ccc);
+    background-color: #ccc !important;
+    #gradient > .radial(#fff, transparent);
     font-family: 'PT Sans', 'Helvetica', 'Tahoma', sans-serif;
     min-height: 100vh;
 }
@@ -22,10 +23,8 @@ body {
     .navbar-brand {
         font-family: 'Lobster Two';
         display: block;
-        width: 400px;
         text-align: center;
         margin: auto;
-        float: none;
         font-size: 32px;
         color: white !important;
         text-shadow: 0 2px 2px rgba(0,0,0,.25);
@@ -170,7 +169,7 @@ uploader {
     box-shadow: 0 2px 4px rgba(0,0,0,.125), 0 5px 250px rgba(0,0,0,.25);
     position: relative;
 
-    img {
+    img, canvas {
         width: 400px;
         height: 400px;
         background: black;
@@ -318,7 +317,7 @@ photo-view {
 .muut {
     width: 600px;
     margin: 30px auto;
-    padding: 20px 40px !important; 
+    padding: 20px 40px !important;
     background: white;
     box-shadow: 0 1px 1px rgba(0,0,0,.25);
 
@@ -326,6 +325,78 @@ photo-view {
         padding: 0;
         * {
             display: none !important;
+        }
+    }
+}
+
+
+user-view {
+    .owner {
+        overflow: hidden;
+        margin: 40px 0 40px;
+        padding: 0 0 5px;
+
+        .avatar {
+            width: 128px;
+            height: 128px;
+            border-radius: 3px;
+            box-shadow: 0 1px 2px rgba(0,0,0,.25);
+            margin: 5px 15px 0 0;
+            float: left;
+        }
+
+        .name {
+            font-size: 32px;
+        }
+    }
+
+    .photo-card-small {
+        float: left;
+        display: block;
+        padding: 10px;
+        margin: 0 20px 20px 0;
+        background: #f0f0f0;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0,0,0,.125), 0 5px 250px rgba(0,0,0,.25);
+        position: relative;
+        width: 220px;
+
+        img {
+            width: 200px;
+            height: 200px;
+            background: black;
+        }
+
+        .title {
+            margin: 2px 0 0;
+            height: 22px;
+            font-size: 15px;
+            font-family: 'Bad Script';
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: #666;
+        }
+
+        .likes {
+            position: absolute;
+            left: 20px;
+            bottom: 40px;
+            font-size: 16px;
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 1px 1px rgba(0,0,0,.5);
+        }
+
+        .transition(0.5s all);
+        box-shadow: 0 1px 2px rgba(0,0,0,.5);
+        position: relative;
+        top: 0px;
+
+        &:hover {
+            box-shadow: 0 5px 20px rgba(0,0,0,.25);
+            top: -5px;
         }
     }
 }

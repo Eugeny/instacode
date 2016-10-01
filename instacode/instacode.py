@@ -45,7 +45,7 @@ class Instacode:
 
     def make_thumbnail(self, photo):
         im = Image.open(photo.get_path())
-        im.thumbnail((240, 240), Image.ANTIALIAS)
+        im.thumbnail((200, 200), Image.ANTIALIAS)
         if im.mode != 'RGB':
             im = im.convert('RGB')
         im.save(photo.get_path('thumbnail', 'jpg'), 'JPEG')

@@ -65,6 +65,7 @@ class User(BaseModel,
             'id': self.id,
             'username': self.username,
             'is_admin': self.is_admin,
+            'created_at': self.created_at,
         }
         if with_photos:
             data['photos'] = [x.serialize(with_content=True) for x in self.photos.filter(saved=True).all()]
@@ -89,6 +90,7 @@ class Photo (BaseModel):
             'id': self.id,
             'title': self.title,
             'like_count': self.like_count,
+            'created_at': self.created_at,
         }
         if with_content:
             data['language'] = self.language

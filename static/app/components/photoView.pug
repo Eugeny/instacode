@@ -3,7 +3,7 @@ div.top
     div.photo-card
         div.label.label1 0000{{$ctrl.photo.id}}
         div.label.label2 INSTACO.DE 107MM
-        img(ng:src='/api/photo/{{$ctrl.photo.id}}/stream')
+        img(ng:src='/stream/{{$ctrl.photo.id}}')
         div.title {{$ctrl.photo.title}}
     div.right
         div(ng:if='$ctrl.photo.user')
@@ -12,16 +12,34 @@ div.top
                 br
                 a.name(ng:href='/user/{{$ctrl.photo.user.username}}') github.com/{{$ctrl.photo.user.username}}
 
-        button.btn.btn-like.btn-default(ng:click='$ctrl.toggleLike()', ng:class='{active: $ctrl.photo.liked}')
-            i.fa.fa-heart(ng:class='{"text-danger": $ctrl.photo.liked}')
-            | &nbsp; {{$ctrl.photo.like_count}}
+        div
+            button.btn.btn-like.btn-default(ng:click='$ctrl.toggleLike()', ng:class='{active: $ctrl.photo.liked}')
+                i.fa.fa-heart(ng:class='{"text-danger": $ctrl.photo.liked}')
+                | &nbsp; {{$ctrl.photo.like_count}}
 
         br
-        br
+        div
+            button.btn.btn-default(ng:click='$ctrl.showCode()')
+                i.fa.fa-code
+                | &nbsp; {{$ctrl.photo.language}} code
 
-        button.btn.btn-default(ng:click='$ctrl.showCode()')
-            i.fa.fa-code
-            | &nbsp; Show code
+        br
+        div
+            a.btn.btn-default(ng:href='/?remix={{$ctrl.photo.id}}')
+                i.fa.fa-refresh
+                | &nbsp; Remix
+
+        br
+        div
+            a.btn.btn-default(ng:show='$ctrl.photo.is_mine', ng:click='$ctrl.delete()')
+                i.fa.fa-trash-o
+                | &nbsp; Delete
+
+        br
+        div
+            a.btn.btn-default(ng:show='!$ctrl.me && $ctrl.photo.is_mine' onclick='location.href = "/login"')
+                i.fa.fa-github
+                | &nbsp; Log in and claim
 
 
 a.muut Comments

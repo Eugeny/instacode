@@ -13,3 +13,4 @@ static/vendor
 static/build
 license.yml*
 ci/tmp
+data

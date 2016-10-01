@@ -1,3 +1,4 @@
+
 const gulp = require('gulp');
 const babel = require('gulp-babel');
 const concat = require('gulp-concat');
@@ -40,6 +41,17 @@ gulp.task('vendor-js', () => {
         'static/vendor/codemirror/lib/codemirror.js',
         'static/vendor/angular-ui-codemirror/ui-codemirror.js',
         'static/vendor/angular-ui-select/dist/select.js',
+        "static/vendor/jquery-ui/ui/version.js",
+        "static/vendor/jquery-ui/ui/plugin.js",
+        "static/vendor/jquery-ui/ui/data.js",
+        "static/vendor/jquery-ui/ui/disable-selection.js",
+        "static/vendor/jquery-ui/ui/safe-active-element.js",
+        "static/vendor/jquery-ui/ui/position.js",
+        "static/vendor/jquery-ui/ui/safe-blur.js",
+        "static/vendor/jquery-ui/ui/scroll-parent.js",
+        "static/vendor/jquery-ui/ui/widget.js",
+        "static/vendor/jquery-ui/ui/widgets/mouse.js",
+        "static/vendor/jquery-ui/ui/widgets/draggable.js",
     ])
         .pipe(concat('vendor.js'))
         .pipe(gulp.dest('static/build'))

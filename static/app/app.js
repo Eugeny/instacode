@@ -11,6 +11,12 @@ angular.module('app', [
     $routeProvider.when('/', {
         template: '<home-view></home-view>'
     })
+    $routeProvider.when('/user/:username', {
+        template: '<user-view user="$resolve.userResponse.data"></user-view>',
+        resolve: {
+            userResponse: ($route, $http) => $http.get(`/api/user/${$route.current.params.username}`)
+        },
+    })
     $routeProvider.when('/:id', {
         template: '<photo-view photo="$resolve.photoResponse.data"></photo-view>',
         resolve: {

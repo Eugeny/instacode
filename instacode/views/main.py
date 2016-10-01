@@ -1,7 +1,9 @@
 import base64
+import datetime
 import json
 import os
 from pygments.lexers import get_all_lexers
+from pyatom import AtomFeed
 
 from django.conf import settings
 from django.shortcuts import get_object_or_404
@@ -39,7 +41,7 @@ def api_highlight(request):
 
 def api_publish(request):
     data = json.loads(request.body)
-    # image = request.POST['image']
+    image = data['image']
     code = data['code']
     language = data['language']
     theme = data.get('theme', 'monokai')
@@ -68,8 +70,8 @@ def api_publish(request):
 
     p.save()
 
-    # p.write(None, base64.b64decode(image))
-    # Instacode().make_thumbnail(p)
+    p.write(None, base64.b64decode(image))
+    Instacode().make_thumbnail(p)
 
     p.saved = True
     p.save()
@@ -101,17 +103,37 @@ def api_bootstrap(request):
 
 def api_photo(request, id=None):
     photo = get_object_or_404(Photo, id=id)
-    data = photo.serialize(with_user=True, with_content=True)
-    data['liked'] = Like.objects.filter(
-        photo=photo,
-        user=request.user,
-        ip=None if request.user else request.ip,
-    ).exists()
-    return JsonResponse(data)
+    if request.method == 'GET':
+        data = photo.serialize(with_user=True, with_content=True)
+        data['liked'] = Like.objects.filter(
+            photo=photo,
+            user=request.user,
+            ip=None if request.user else request.ip,
+        ).exists()
+        data['is_mine'] = photo.user and (request.user == photo.user)
+        data['is_mine'] |= photo.temp_owner == request.session.session_key
+        return JsonResponse(data)
+    if request.method == 'DELETE':
+        is_mine = False
+        is_mine |= photo.user and (request.user == photo.user)
+        is_mine |= photo.temp_owner == request.session.session_key
+        if is_mine:
+            photo.delete()
+        return JsonResponse(None, safe=False)
 
 
-def api_user(request, id=None):
-    user = get_object_or_404(User, id=id)
+def stream(request, id=None):
+    photo = get_object_or_404(Photo, id=id)
+    return HttpResponse(photo.read(), content_type='image/png')
+
+
+def thumbnail(request, id=None):
+    photo = get_object_or_404(Photo, id=int(id))
+    return HttpResponse(photo.read('thumbnail', 'jpg'), content_type='image/jpeg')
+
+
+def api_user(request, username=None):
+    user = get_object_or_404(User, username=username)
     return JsonResponse(user.serialize(with_photos=True))
 
 
@@ -140,3 +162,25 @@ def api_dislike(request, id=None):
         photo.like_count -= 1
         photo.save()
     return JsonResponse({})
+
+
+def feed(self, username=None):
+    user = get_object_or_404(User, username=username)
+
+    feed = AtomFeed(
+        title="Instacode: %s" % username,
+        feed_url="http://instaco.de/feed/%s" % username,
+        url="http://instaco.de",
+        author="Instacode"
+    )
+
+    for photo in user.photos.order_by('-id')[:100].all():
+        feed.add(
+            title=(photo.title or 'Untitled') + ' by %s' % user.username,
+            content_type="html",
+            author=username,
+            url="http://instaco.de/%s" % photo.id,
+            updated=photo.created_at
+        )
+
+    return HttpResponse(feed.to_string(), content_type='application/atom+xml')
