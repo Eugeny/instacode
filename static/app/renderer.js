@@ -39,7 +39,7 @@ shaderCodeFragment = `
         pixelUV.x *= uSize.x / SCALE;
         pixelUV.y *= uSize.y / SCALE;
 
-        if (u_pixels) {
+        if (u_pixels || u_LCDpixels) {
             uv.x = floor(pixelUV.x) / uSize.x * SCALE;
             uv.y = floor(pixelUV.y) / uSize.y * SCALE;
         }
@@ -51,7 +51,7 @@ shaderCodeFragment = `
         float kG = 1.0 - texture2D(uPixelSampler, vec2(pixelUV.x - 0.5, 0.5)).r;
         float kB = 1.0 - texture2D(uPixelSampler, vec2(pixelUV.x - 0.75, 0.5)).r;
 
-        if (u_pixels) {
+        if (u_pixels || u_LCDpixels) {
             color.r *= k;
             color.g *= k;
             color.b *= k;
@@ -114,7 +114,7 @@ shaderPPCodeFragment = `
         // Noise
         vec4 seed = texture2D(uNoiseSampler, uv * 10.0);
         if (u_noise && uPass == 1) {
-            float k = 0.1;
+            float k = 0.2;
             color.r -= rand(seed.xy + uv) * k;
             color.g -= rand(seed.yz + uv) * k;
             color.b -= rand(seed.zx + uv) * k;

@@ -64,6 +64,18 @@ body {
 }
 
 
+.list-group {
+    box-shadow: 0 2px 2px rgba(0,0,0,.25);
+    border-radius: 5px;
+    border-color: #888;
+    overflow: hidden;
+
+    .list-group-item {
+        .transition(0.25s all);
+    }
+    //#gradient > .vertical(#fff, #ccc);
+
+}
 .btn-primary {
     #gradient > .vertical(#3293e6, #286090);
     .transition(0.25s all);
@@ -237,14 +249,24 @@ uploader {
 }
 
 .btn-theme {
-    margin: 0;
-    padding: 5px 10px;
+    margin: 0 0 10px;
+    padding: 5px 10px 0;
     border-radius: 5px;
     background: transparent;
 
     img {
         box-shadow: 0 1px 1px rgba(0,0,0,.5);
         border-radius: 3px;
+        display: block;
+        width: 100px;
+    }
+
+    label {
+        display: block;
+        text-align: center;
+        color: #666;
+        margin: 0;
+        line-height: 30px;
     }
 
     &:hover {
@@ -350,53 +372,64 @@ user-view {
         }
     }
 
-    .photo-card-small {
-        float: left;
-        display: block;
-        padding: 10px;
-        margin: 0 20px 20px 0;
-        background: #f0f0f0;
-        border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0,0,0,.125), 0 5px 250px rgba(0,0,0,.25);
-        position: relative;
-        width: 220px;
+}
 
-        img {
-            width: 200px;
-            height: 200px;
-            background: black;
-        }
+.photo-card-small {
+    float: left;
+    display: block;
+    padding: 10px;
+    margin: 0 60px 40px 0;
+    background: #f0f0f0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.125), 0 5px 250px rgba(0,0,0,.25);
+    position: relative;
+    width: 220px;
 
-        .title {
-            margin: 2px 0 0;
-            height: 22px;
-            font-size: 15px;
-            font-family: 'Bad Script';
-            text-align: center;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            color: #666;
-        }
+    img {
+        width: 200px;
+        height: 200px;
+        background: black;
+    }
 
-        .likes {
-            position: absolute;
-            left: 20px;
-            bottom: 40px;
-            font-size: 16px;
-            color: white;
-            font-weight: bold;
-            text-shadow: 0 1px 1px rgba(0,0,0,.5);
-        }
+    .title {
+        margin: 2px 0 0;
+        height: 22px;
+        font-size: 15px;
+        font-family: 'Bad Script';
+        text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: #666;
+        text-decoration: none !important;
+    }
 
-        .transition(0.5s all);
-        box-shadow: 0 1px 2px rgba(0,0,0,.5);
-        position: relative;
-        top: 0px;
+    .likes {
+        position: absolute;
+        left: 20px;
+        bottom: 40px;
+        font-size: 16px;
+        color: white;
+        font-weight: bold;
+        text-shadow: 0 1px 1px rgba(0,0,0,.5);
+    }
 
-        &:hover {
-            box-shadow: 0 5px 20px rgba(0,0,0,.25);
-            top: -5px;
-        }
+    .user {
+        position: absolute;
+        right: 20px;
+        bottom: 40px;
+        font-size: 16px;
+        color: white;
+        text-shadow: 0 1px 1px rgba(0,0,0,.5);
+    }
+
+    .transition(0.5s all);
+    box-shadow: 0 1px 2px rgba(0,0,0,.5);
+    position: relative;
+    top: 0px;
+
+    &:hover {
+        box-shadow: 0 5px 20px rgba(0,0,0,.25);
+        top: -5px;
     }
 }

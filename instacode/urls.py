@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.contrib import admin
 
 from .views.auth import log_in, log_out, oauth_callback
-from .views.main import view_index, api_bootstrap, api_highlight, api_publish, api_photo, stream, thumbnail, api_user, api_like, api_dislike, feed
+from .views.main import view_index, api_bootstrap, api_feeds, api_highlight, api_publish, api_photo, stream, thumbnail, api_user, api_like, api_dislike, feed
 
 
 urlpatterns = [
@@ -10,6 +10,7 @@ urlpatterns = [
 
     url(r'^$', view_index),
     url(r'^api/bootstrap$', api_bootstrap),
+    url(r'^api/feeds$', api_feeds),
     url(r'^api/highlight$', api_highlight),
     url(r'^api/publish$', api_publish),
     url(r'^api/photo/(?P<id>\d+)$', api_photo),

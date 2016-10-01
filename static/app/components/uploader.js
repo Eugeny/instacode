@@ -1,6 +1,6 @@
 angular.module('app').component('uploader', {
     templateUrl: 'components/uploader.html',
-    controller: function (bootstrap, $interval, $http, $q, $location, $window) {
+    controller: function (bootstrap, $interval, $timeout, $http, $q, $location, $window) {
         var ctrl = this
         ctrl.step = 'code'
         ctrl.theme = 'fruity'
@@ -8,10 +8,81 @@ angular.module('app').component('uploader', {
         ctrl.language = 'JavaScript'
         ctrl.spoilOpacity = [0, 0, 0, 0, 0, 0]
         ctrl.spoilRate = [0, 0, 0, 0, 0, 0]
+        ctrl.spoilEnabled = false
         ctrl.spoilVisible = false
+        ctrl.stylesLimit = 5
 
+        ctrl.styles= [
+            'fruity',
+            'monokai',
+            'solarized',
+            'paraiso-dark',
+            'xcode',
+            'tango',
+            'vim',
+            'vs',
+            //'manni',
+            'igor',
+            'solarized256',
+            'lovelace',
+            'autumn',
+            'perldoc',
+            'borland',
+            'emacs',
+            'friendly',
+            //'colorful',
+            'murphy',
+            'bw',
+            'paraiso-light',
+            'trac',
+            'algol',
+        ]
+        ctrl.effects = [
+            {
+                name: 'Pixels',
+                id: 'pixels',
+            },
+            {
+                name: 'LCD pixels',
+                id: 'LCDpixels',
+            },
+            {
+                name: 'Sepia',
+                id: 'sepia',
+            },
+            {
+                name: 'Desaturate',
+                id: 'desaturate',
+            },
+            {
+                name: 'Vignette',
+                id: 'vignette',
+            },
+            {
+                name: 'Tilt shift',
+                id: 'tiltshift',
+            },
+            {
+                name: 'Noise',
+                id: 'noise',
+            },
+        ]
 
-        ctrl.code = 'bootstrap.promise.then(() => {\n            ctrl.languages =\nbootstrap.languages\n            ctrl.me = bootstrap.me\n        })'
+        // TODO
+        ctrl.language = 'Python'
+        ctrl.code = `
+class Instacode:
+    def run(self, code, language=None, font='Ubuntu Mono', style='solarized256'):
+        style = STYLE_CLASS_MAP.get(style, style)
+
+        code = '\\n' + '\\n'.join(
+            ('  ' + x[:max_width] + '  ')
+            for x in code.splitlines()[:max_height]
+        ) + '\\n'
+
+        formatter = ImageFormatter(font_name=font, font_size=36, style=style, line_numbers=False, image_pad=20, line_pad=12)
+        result = highlight(code, lexer, formatter)
+                `
 
         bootstrap.promise.then(() => {
             ctrl.languages = bootstrap.languages
@@ -33,13 +104,17 @@ angular.module('app').component('uploader', {
 
             if (step == 'style') {
                 ctrl.spoilVisible = true
+                ctrl.spoilEnabled = true
                 $http.post('/api/highlight', {
                     code: ctrl.code,
                     language: ctrl.language,
                     theme: ctrl.theme,
                 }).then((response) => {
                     console.log('image', response.data)
-                    ctrl.spoilVisible = false
+                    ctrl.spoilEnabled = false
+                    $timeout(() => {
+                        ctrl.spoilVisible = false
+                    }, 1500)
 
                     ctrl.renderer.resize(400, 400)
                     loadImage('data:image/png;base64,' + response.data)
@@ -96,7 +171,7 @@ angular.module('app').component('uploader', {
             ctrl.renderer = new Renderer(display[0], assets)
 
             let parameters = {
-                position: [0, 0, -2.6],
+                position: [0, 0, -1.6],
                 rotation: [0, 0],
             }
 
@@ -137,27 +212,11 @@ angular.module('app').component('uploader', {
                 e.preventDefault()
             })
 
-            ctrl.controlModeDrag = false
-
-            let controls = {}
-
-            /*
-            $('input[data-prop]').each (i, e) =>
-                @controls[$(e).attr('data-prop')] = $(e)
-                dep = $(e).attr('data-depend')
-                if dep
-                    if not @controls[dep].is(':checked')
-                        $(e).next().hide()
-                    $(e).next().css('margin-left': '25px')
-                    @controls[dep].click () =>
-                        $(e).next().toggle()
-            */
+            ctrl.controlModeDrag = true
 
             let updateRenderer = () => {
                 ctrl.renderer.objectPosition = parameters.position
                 ctrl.renderer.objectRotation = parameters.rotation
-                //for k of @controls
-                //    @ctrl.renderer.objectShaders[k] = @controls[k].is(':checked')
             }
 
             updateRenderer()

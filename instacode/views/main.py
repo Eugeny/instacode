@@ -1,7 +1,8 @@
 import base64
-import datetime
 import json
 import os
+from datetime import datetime, timedelta
+
 from pygments.lexers import get_all_lexers
 from pyatom import AtomFeed
 
@@ -101,6 +102,21 @@ def api_bootstrap(request):
     })
 
 
+def api_feeds(request):
+    feeds = {
+        'newest': Photo.objects.filter(saved=True).select_related('user').order_by('-created_at')[:20],
+        'top_today': Photo.objects.filter(saved=True).filter(created_at__gte=datetime.now() - timedelta(days=1)).select_related('user').order_by('-like_count')[:20],
+        'top_month': Photo.objects.filter(saved=True).filter(created_at__gte=datetime.now() - timedelta(days=30)).select_related('user').order_by('-like_count')[:20],
+        'top_ever': Photo.objects.filter(saved=True).select_related('user').order_by('-like_count')[:20],
+    }
+
+    r = {}
+    for name, feed in feeds.iteritems():
+        r[name] = [photo.serialize(with_user=True) for photo in feed]
+
+    return JsonResponse(r)
+
+
 def api_photo(request, id=None):
     photo = get_object_or_404(Photo, id=id)
     if request.method == 'GET':
@@ -110,12 +126,12 @@ def api_photo(request, id=None):
             user=request.user,
             ip=None if request.user else request.ip,
         ).exists()
-        data['is_mine'] = photo.user and (request.user == photo.user)
+        data['is_mine'] = (photo.user is not None) and (request.user == photo.user)
         data['is_mine'] |= photo.temp_owner == request.session.session_key
         return JsonResponse(data)
     if request.method == 'DELETE':
         is_mine = False
-        is_mine |= photo.user and (request.user == photo.user)
+        is_mine |= (photo.user is not None) and (request.user == photo.user)
         is_mine |= photo.temp_owner == request.session.session_key
         if is_mine:
             photo.delete()
