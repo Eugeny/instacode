@@ -1,0 +1,4 @@
+div.modal-body
+    textarea.form-control(ng:model='$ctrl.photo.code', ui-codemirror='{lineWrapping: true, lineNumbers: true}', ng:if='$ctrl.photo')
+div.modal-footer
+    button.btn.btn-default(ng:click='$ctrl.modalInstance.close()') Close

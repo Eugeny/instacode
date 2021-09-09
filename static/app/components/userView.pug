@@ -1,0 +1,20 @@
+div.container
+    div.owner
+        img.avatar(ng:src='https://github.com/{{$ctrl.user.username}}.png')
+        div
+            div.name {{$ctrl.user.username}}
+            div.btn-group
+                a.btn.btn-default(ng:href='/feed/{{$ctrl.user.username}}', target='_blank')
+                    i.fa.fa-rss
+                    | &nbsp; Feed
+                a.btn.btn-default(ng:href='http://github.com/{{$ctrl.user.username}}', target='_blank')
+                    i.fa.fa-github
+                    | &nbsp; Github
+
+
+    a.photo-card-small(ng:repeat='photo in $ctrl.user.photos|orderBy:"-created_at"', ng:href='/{{photo.id}}')
+        img(ng:src='/thumbnail/{{photo.id}}')
+        div.title {{photo.title}}
+        div.likes(ng:show='photo.like_count > 0')
+            i.fa.fa-heart
+            | &nbsp; {{photo.like_count}}

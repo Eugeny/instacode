@@ -1,0 +1,46 @@
+apps:
+- name: web
+  params:
+    custom_conf: null
+    environment: null
+    module: wsgi
+    user: root
+    virtualenv: env
+    workers: null
+  path: ''
+  type: python-wsgi
+custom_conf: gzip on; gzip_comp_level 9; gzip_types *;
+custom_conf_toplevel: null
+domains:
+- domain: instaco.de
+enabled: true
+locations:
+- custom_conf: null
+  custom_conf_override: false
+  match: exact
+  params:
+    autoindex: false
+  path: public
+  path_append_pattern: true
+  pattern: /static
+  type: static
+- custom_conf: null
+  custom_conf_override: false
+  match: exact
+  params:
+    app: web
+  path: null
+  path_append_pattern: false
+  pattern: /
+  type: app
+maintenance_mode: false
+name: instacode
+ports:
+- default: false
+  host: '*'
+  port: 80
+  spdy: false
+  ssl: false
+root: /srv/instacode
+ssl_cert_path: null
+ssl_key_path: null

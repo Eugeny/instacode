@@ -1,0 +1,26 @@
+div.row
+    div.col-sm-8
+        div.wallpaper
+            canvas(editor='$ctrl.editor')
+    div.col-sm-4
+        br
+        br
+
+        button.btn.btn-primary.btn-lg.pull-right(ng:click='$ctrl.generate()')
+            | Generate
+        div.btn-group
+            button.btn.btn-default.btn-lg(ng:class='{active: $ctrl.editor.controlModeDrag}', ng:click='$ctrl.editor.controlModeDrag = true')
+                i.fa.fa-arrows
+                | &nbsp; Move
+            button.btn.btn-default.btn-lg(ng:class='{active: !$ctrl.editor.controlModeDrag}', ng:click='$ctrl.editor.controlModeDrag = false')
+                i.fa.fa-repeat
+                | &nbsp; Rotate
+
+        br
+        br
+        p
+            ui-select(ng:model='$ctrl.resolution')
+                ui-select-match
+                    span {{$select.selected.width}} x {{$select.selected.height}}
+                ui-select-choices(repeat="x in ($ctrl.resolutions|filter: $select.search)")
+                    span {{x.width}} x {{x.height}}

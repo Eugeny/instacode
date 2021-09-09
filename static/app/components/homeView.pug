@@ -1,0 +1,45 @@
+uploader
+
+br
+
+money
+
+br
+
+div.container
+    div.clearfix
+
+    div.text-center
+        div.btn-group
+            a.btn.btn-default(
+                uib-btn-radio='"newest"',
+                ng:model='$ctrl.selectedFeed'
+            ) Newest shots
+            a.btn.btn-default(
+                uib-btn-radio='"top_today"',
+                ng:model='$ctrl.selectedFeed'
+            ) Today's top
+            a.btn.btn-default(
+                uib-btn-radio='"top_month"',
+                ng:model='$ctrl.selectedFeed'
+            ) Month's top
+            a.btn.btn-default(
+                uib-btn-radio='"top_ever"',
+                ng:model='$ctrl.selectedFeed'
+            ) Best shots ever
+        br
+        br
+
+    div.clearfix
+
+    a.photo-card-small(ng:repeat='photo in $ctrl.feeds[$ctrl.selectedFeed]', ng:href='/{{photo.id}}')
+        img(ng:src='/thumbnail/{{photo.id}}')
+        div.title {{photo.title}}
+        div.likes(ng:show='photo.like_count > 0')
+            i.fa.fa-heart
+            | &nbsp; {{photo.like_count}}
+        div.user(ng:show='photo.user')
+            i.fa.fa-user
+            | &nbsp; {{photo.user.username}}
+
+    div.clearfix

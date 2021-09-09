@@ -1,0 +1,24 @@
+{
+  "name": "instacode2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-preset-es2015-script": "^1.1.0",
+    "gulp": "^3.9.1",
+    "gulp-angular-templatecache": "^2.0.0",
+    "gulp-babel": "^6.1.2",
+    "gulp-concat": "^2.6.0",
+    "gulp-less": "^3.1.0",
+    "gulp-pug": "^3.0.4",
+    "less": "^2.7.1"
+  },
+  "dependencies": {
+    "bower": "^1.7.9"
+  }
+}

@@ -1,0 +1,55 @@
+div.top
+    div.left
+    div.photo-card
+        div.label.label1 0000{{$ctrl.photo.id}}
+        div.label.label2 INSTACO.DE 107MM
+        img(ng:src='/stream/{{$ctrl.photo.id}}')
+        div.title {{$ctrl.photo.title}}
+    div.right
+        div(ng:if='$ctrl.photo.user')
+            div.owner
+                img.avatar(ng:src='https://github.com/{{$ctrl.photo.user.username}}.png')
+                br
+                a.name(ng:href='/user/{{$ctrl.photo.user.username}}') github.com/{{$ctrl.photo.user.username}}
+
+        p
+            div.btn-group
+                a.btn.btn-like.btn-default(ng:click='$ctrl.toggleLike()', ng:class='{active: $ctrl.photo.liked}')
+                    i.fa.fa-heart(ng:class='{"text-danger": $ctrl.photo.liked}')
+                    | &nbsp; {{$ctrl.photo.like_count}}
+
+                a.btn.btn-default(href='http://twitter.com/intent/tweet?text=Instacode:%20{{$ctrl.photo.title|urlencode:""}}%20http://instaco.de/{{$ctrl.photo.id}}')
+                    i.fa.fa-twitter
+
+                a.btn.btn-default(href='https://www.facebook.com/dialog/feed?app_id=311283212326687&link=http://instaco.de/{{$ctrl.photo.id}}&picture=http://instaco.de/{{$ctrl.photo.id}}&name=Instacode&description={{$ctrl.photo.title|urlencode}}&redirect_uri=http://instaco.de/{{$ctrl.photo.id}}"')
+                    i.fa.fa-facebook
+
+        p
+            div.btn-group
+                a.btn.btn-default(ng:click='$ctrl.showCode()')
+                    i.fa.fa-code
+                    | &nbsp; {{$ctrl.photo.language}} code
+                a.btn.btn-default(ng:href='/?remix={{$ctrl.photo.id}}')
+                    i.fa.fa-refresh
+                    | &nbsp; Remix
+
+        p
+            a.btn.btn-default(ng:href='/wallpaper/{{$ctrl.photo.id}}')
+                i.fa.fa-image
+                | &nbsp; Wallpaper
+
+        p
+            a.btn.btn-default(ng:show='$ctrl.photo.is_mine', ng:click='$ctrl.delete()')
+                i.fa.fa-trash-o
+                | &nbsp; Delete
+
+        br
+        div
+            a.btn.btn-default(ng:show='!$ctrl.me && $ctrl.photo.is_mine' ng:click='$ctrl.location.href = "/login?return=/{{$ctrl.photo.id}}"')
+                i.fa.fa-github
+                | &nbsp; Log in and claim
+
+
+money
+    
+a.muut Comments
